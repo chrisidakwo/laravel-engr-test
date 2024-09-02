@@ -4,20 +4,20 @@
         <form @submit.prevent="submitOrder">
             <section class="grid gap-2 grid-cols-1 sm:grid-cols-2 mb-6 w-full">
                 <div>
-                    <input-label for="hmo-code" value="HMO Code" />
-                    <text-input v-model="form.hmo_code" required/>
+                    <input-label for="hmo_code" value="HMO Code" />
+                    <text-input id="hmo_code" v-model="form.hmo_code" required/>
                 </div>
 
                 <div>
-                    <input-label for="provider-name" value="Provider Name" />
-                    <text-input v-model="form.provider_name" required />
+                    <input-label for="provider_name" value="Provider Name" />
+                    <text-input id="provider_name" v-model="form.provider_name" required />
                 </div>
 
                 <div>
-                    <input-label for="encounter-date" value="Encounter Date" />
+                    <input-label for="encounter_date" value="Encounter Date" />
                     <text-input
                         type="date"
-                        id="encounter-date"
+                        id="encounter_date"
                         v-model="form.encounter_date"
                         :max="maxDate"
                         required
@@ -61,10 +61,11 @@
                     <text-input
                         class="block border rounded-md shadow-sm bg-gray-100 pointer-events-none min-w-[18%] w-full"
                         :value="calculateSubtotal(item)"
+                        placeholder="Sub total"
                         readonly
                     />
 
-                    <danger-button @click.prevent="removeItem(index)" class="flex !p-0 justify-center font-extrabold w-full max-w-[50px]">
+                    <danger-button data-testid="remove-order-item" @click.prevent="removeItem(index)" class="flex !p-0 justify-center font-extrabold w-full max-w-[50px]">
                         -
                     </danger-button>
                 </div>
@@ -76,6 +77,7 @@
                 <text-input
                     type="number"
                     :value="calculateOrderTotal"
+                    data-testid="order-total"
                     class="bg-gray-100 text-gray-700 pointer-events-none"
                     readonly
                 />
@@ -128,6 +130,13 @@ const removeItem = (index) => form.items.splice(index, 1);
 
 // Handle form submission
 const submitOrder = async () => {
-    console.log('form', JSON.parse(JSON.stringify(form)));
+    const data = {
+        hmo_code: form.hmo_code,
+        provider_name: form.provider_name,
+        encounter_date: form.encounter_date,
+        items: JSON.parse(JSON.stringify(form.items)),
+    };
+
+    console.log('data', data);
 }
 </script>
