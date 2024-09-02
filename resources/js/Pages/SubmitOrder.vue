@@ -102,15 +102,17 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 const now = new Date();
 const maxDate = now.toISOString().substring(0, 10);
 
+const initialState = {
+    name: null,
+    unit_price: null,
+    quantity: 1,
+};
+
 const form = reactive({
     hmo_code: null,
     provider_name: null,
     encounter_date: null,
-    items: [{
-        name: null,
-        unit_price: null,
-        quantity: 1,
-    }],
+    items: [initialState],
 });
 
 const calculateSubtotal = (item) => {
@@ -130,13 +132,31 @@ const removeItem = (index) => form.items.splice(index, 1);
 
 // Handle form submission
 const submitOrder = async () => {
-    const data = {
-        hmo_code: form.hmo_code,
-        provider_name: form.provider_name,
-        encounter_date: form.encounter_date,
-        items: JSON.parse(JSON.stringify(form.items)),
-    };
+    try {
+        const response = await fetch('/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                hmo_code: form.hmo_code,
+                provider_name: form.provider_name,
+                encounter_date: form.encounter_date,
+                items: JSON.parse(JSON.stringify(form.items)),
+            }),
+        });
+        if (response.ok) {
+            alert('Order submitted successfully!');
+            Object.assign(form, initialState);
+        } else {
+            alert('Failed to submit order.');
+            // TODO: Handle validation errors
+        }
+    } catch (error) {
+        console.error('Error submitting order:', error);
+        alert('An error occurred. Please try again.');
+    }
 
-    console.log('data', data);
+
 }
 </script>

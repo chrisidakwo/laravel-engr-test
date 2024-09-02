@@ -11,6 +11,10 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $with = ['orderItems'];
+
+    protected $guarded = [];
+
     protected $casts = [
         'encounter_date' => 'date',
     ];
