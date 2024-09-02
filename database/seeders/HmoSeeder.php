@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Enums\BatchPreference;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class HmoSeeder extends Seeder
 {
-    private $hmos = [
-        ['name'=>'HMO A', 'code'=> 'HMO-A'],
-        ['name'=>'HMO B', 'code'=> 'HMO-B'],
-        ['name'=>'HMO C', 'code'=> 'HMO-C'],
-        ['name'=>'HMO D', 'code'=> 'HMO-D'],
+    private array $hmos = [
+        ['name'=>'HMO A', 'code'=> 'HMO-A', 'batch_preference' => BatchPreference::ENCOUNTER_DATE->value],
+        ['name'=>'HMO B', 'code'=> 'HMO-B', 'batch_preference' => BatchPreference::ORDER_RECEIPT_DATE->value],
+        ['name'=>'HMO C', 'code'=> 'HMO-C', 'batch_preference' => BatchPreference::ORDER_RECEIPT_DATE->value],
+        ['name'=>'HMO D', 'code'=> 'HMO-D', 'batch_preference' => BatchPreference::ENCOUNTER_DATE->value],
     ];
 
     /**

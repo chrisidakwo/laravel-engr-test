@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\BatchPreference;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hmos', function (Blueprint $table) {
+        Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('code')->unique();
-            $table->enum('batch_preference', array_column(BatchPreference::cases(), 'value'))
-                ->default(BatchPreference::ENCOUNTER_DATE->value);
+            $table->foreignId('order_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->string('item');
+            $table->integer('price');
+            $table->integer('qty');
+            $table->decimal('total_price')->storedAs('price * qty');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hmos');
+        Schema::dropIfExists('order_items');
     }
 };
