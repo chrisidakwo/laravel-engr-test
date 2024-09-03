@@ -26,18 +26,14 @@ class OrderService
         ]);
 
         // Create order items
-        OrderItem::query()->insert(
-            array_map(function ($item) use ($order) {
-                return [
-                    'order_id' => $order->id,
-                    'item' => $item['name'],
-                    'price' => $item['unit_price'],
-                    'qty' => $item['quantity'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
-            }, $orderItems),
-        );
+        $order->orderItems()->createMany(array_map(function ($item) use ($order) {
+            return [
+                'order_id' => $order->id,
+                'item' => $item['name'],
+                'price' => $item['unit_price'],
+                'qty' => $item['quantity'],
+            ];
+        }, $orderItems));
 
         // Batch order
         dispatch(new BatchOrder($order));
