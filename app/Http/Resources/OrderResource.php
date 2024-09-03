@@ -22,7 +22,7 @@ class OrderResource extends JsonResource
     {
         return [
             'providerName' => $this->provider_name,
-            'encounterDate' => $this->encounter_date->format('jS d Y'),
+            'encounterDate' => $this->encounter_date->format('Y-m-d'),
             'totalAmount' => (float) $this->total_amount,
 
             'items' => OrderItemResource::collection($this->orderItems),

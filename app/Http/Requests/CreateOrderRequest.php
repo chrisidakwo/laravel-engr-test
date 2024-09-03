@@ -27,7 +27,7 @@ class CreateOrderRequest extends FormRequest
             'encounter_date' => ['required', 'date'],
             'items' => ['required', 'array', 'min:1'],
             'items.*.name' => ['required', 'string'],
-            'items.*.unit_price' => ['required', 'numeric', 'min:0'],
+            'items.*.unit_price' => ['required', 'numeric', 'min:1'],
             'items.*.quantity' => ['required', 'integer', 'min:1'],
         ];
     }
