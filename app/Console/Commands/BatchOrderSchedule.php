@@ -6,7 +6,6 @@ use App\Mail\BatchOrderProcessedMail;
 use App\Models\Batch;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Mail;
 
 class BatchOrderSchedule extends Command
@@ -30,8 +29,8 @@ class BatchOrderSchedule extends Command
      */
     public function handle(): void
     {
-        $lastMonth = Date::now()->subMonth()->endOfMonth()->format('M');
-        $lastMonthYear = Date::now()->subMonth()->endOfMonth()->format('Y');
+        $lastMonth = date('M', strtotime("last day of -1 month"));
+        $lastMonthYear = date('Y', strtotime("last day of -1 month"));
 
         Batch::query()->with(['hmo'])->where('name', 'LIKE', "%{$lastMonth} {$lastMonthYear}")
             ->chunk(100, function (Collection $batches) {

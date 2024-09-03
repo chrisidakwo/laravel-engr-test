@@ -24,5 +24,6 @@ The UI is displayed on the root page
 
 ## Extra Notes
 
+A command exists to send batched orders at the end of each month. A schedule has been created in `console.php` to run on the first day of every month at 1am
 
-
+You can test the command by running this command in the project console: `php artisan app:batch-orders`
