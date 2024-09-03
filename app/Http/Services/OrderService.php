@@ -33,6 +33,8 @@ class OrderService
                     'item' => $item['name'],
                     'price' => $item['unit_price'],
                     'qty' => $item['quantity'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ];
             }, $orderItems),
         );
