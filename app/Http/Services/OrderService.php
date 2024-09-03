@@ -6,7 +6,6 @@ namespace App\Http\Services;
 
 use App\Jobs\BatchOrder;
 use App\Models\Order;
-use App\Models\OrderItem;
 
 class OrderService
 {
