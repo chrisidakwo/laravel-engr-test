@@ -18,10 +18,12 @@ return new class extends Migration
                 ->references('id')
                 ->on('hmos')
                 ->cascadeOnDelete();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('provider_name');
 
             $table->timestamps();
+
+            $table->unique(['hmo_id', 'name']);
         });
     }
 
