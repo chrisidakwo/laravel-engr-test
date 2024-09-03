@@ -37,6 +37,7 @@ class OrderService
             }, $orderItems),
         );
 
+        // Batch order
         dispatch(new BatchOrder($order));
 
         return $order;

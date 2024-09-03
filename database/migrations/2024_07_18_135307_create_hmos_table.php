@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->unique();
+            $table->string('email');
             $table->enum('batch_preference', array_column(BatchPreference::cases(), 'value'))
                 ->default(BatchPreference::ENCOUNTER_DATE->value);
             $table->timestamps();

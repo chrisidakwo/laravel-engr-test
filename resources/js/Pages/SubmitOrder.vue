@@ -147,7 +147,7 @@ const submitOrder = async () => {
         });
         if (response.ok) {
             alert('Order submitted successfully!');
-            Object.assign(form, initialState);
+            location.reload();
         } else {
             alert('Failed to submit order.');
             // TODO: Handle validation errors

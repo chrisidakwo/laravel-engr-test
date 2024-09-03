@@ -22,9 +22,9 @@ class OrderItemResource extends JsonResource
     {
         return [
             'item' => $this->item,
-            'price' => $this->price,
-            'qty' => $this->price,
-            'subTotal' => $this->total_price,
+            'price' => (float) $this->price,
+            'qty' => $this->qty,
+            'subTotal' => (float) $this->total_price,
         ];
     }
 }

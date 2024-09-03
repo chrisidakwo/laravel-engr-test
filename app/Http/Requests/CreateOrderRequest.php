@@ -23,7 +23,7 @@ class CreateOrderRequest extends FormRequest
     {
         return [
             'hmo_code' => ['required', 'exists:hmos,code'],
-            'provider_name' => ['required', 'exists:providers,name'],
+            'provider_name' => ['required', 'string'],
             'encounter_date' => ['required', 'date'],
             'items' => ['required', 'array', 'min:1'],
             'items.*.name' => ['required', 'string'],

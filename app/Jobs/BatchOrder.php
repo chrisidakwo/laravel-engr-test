@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Http\Services\BatchService;
 use App\Models\Order;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,6 +15,7 @@ class BatchOrder implements ShouldQueue
     use Queueable, InteractsWithQueue, SerializesModels, Dispatchable;
 
     protected Order $order;
+    protected BatchService $batchService;
 
     /**
      * Create a new job instance.
@@ -21,6 +23,7 @@ class BatchOrder implements ShouldQueue
     public function __construct(Order $order)
     {
         $this->order = $order->load(['orderItems', 'hmo']);
+        $this->batchService = resolve(BatchService::class);
     }
 
     /**
@@ -28,7 +31,20 @@ class BatchOrder implements ShouldQueue
      */
     public function handle(): void
     {
-        $hmo = $this->order->hmo;
+        $providerName = $this->order->provider_name;
+        $hmoBatchPreference = $this->order->hmo->batch_preference;
 
+        $batchMonth = $this->batchService->getHmoBatchMonth(
+            $hmoBatchPreference,
+            $this->order->created_at,
+            $this->order->encounter_date,
+        );
+
+        $this->batchService->batchOrder(
+            orderId: $this->order->id,
+            hmoId: $this->order->hmo_id,
+            providerName: $providerName,
+            batchMonth: $batchMonth,
+        );
     }
 }

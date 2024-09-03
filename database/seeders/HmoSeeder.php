@@ -20,6 +20,11 @@ class HmoSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('hmos')->insert($this->hmos);
+        DB::table('hmos')->insert(array_map(function ($hmo) {
+            return [
+                ...$hmo,
+                'email' => fake()->safeEmail,
+            ];
+        }, $this->hmos));
     }
 }

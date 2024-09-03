@@ -19,6 +19,7 @@ return new class extends Migration
                 ->on('hmos')
                 ->cascadeOnDelete();
             $table->string('name')->unique();
+            $table->string('provider_name');
 
             $table->timestamps();
         });

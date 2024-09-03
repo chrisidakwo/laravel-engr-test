@@ -21,6 +21,7 @@ class HmoFactory extends Factory
         return [
             'name' => $this->faker->company(),
             'code' => (new HmoDataGenerator())->generateUniqueCode(),
+            'email' => $this->faker->unique()->safeEmail(),
             'batch_preference' => $this->faker->randomElement(array_column(BatchPreference::cases(), 'value'))
         ];
     }
